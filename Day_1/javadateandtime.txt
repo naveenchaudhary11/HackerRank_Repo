@@ -1,0 +1,24 @@
+import java.util.Scanner;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.util.DateFormat;
+import java.util.Date;
+
+public Class Solution {
+    String getDay(String day,String month,String year){
+    String sDate1=day+"/"+month+"/"+year;  
+    Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+    DateFormat format2=new SimpleDateFormat("EEEE"); 
+    String finalDay=format2.format(date1);
+    return finalDay;
+    
+}
+public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String month = in.next();
+        String day = in.next();
+        String year = in.next();
+        
+        System.out.println(getDay(day, month, year));
+    }
+}
