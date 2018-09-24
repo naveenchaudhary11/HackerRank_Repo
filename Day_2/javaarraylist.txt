@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+       
+        ArrayList[] list = new ArrayList[n];
+        
+        for(int i=0;i<n;i++){
+            list[i] = new ArrayList();
+            int arrLen = scanner.nextInt();
+            for(int j=0;j<arrLen;j++){
+                list[i].add(scanner.nextInt());
+            }
+        }
+        int query = scanner.nextInt();
+        for(int j=0;j<query;j++){
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            try{
+                System.out.println(list[x-1].get(y-1));
+            }catch(Exception e){
+                System.out.println("ERROR!");
+            }
+        }
+        
+        
+    }
+}
