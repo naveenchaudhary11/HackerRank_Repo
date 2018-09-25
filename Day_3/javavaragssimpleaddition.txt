@@ -1,0 +1,16 @@
+class Add{
+
+    void add(int ... n){
+        int sum =0;
+        String p="";
+        for(int i: n){
+            sum +=i;
+            System.out.print(p+i);
+            p="+";
+            
+        }
+        System.out.print("="+sum+"\n");
+        
+    }
+
+}
