@@ -1,4 +1,4 @@
-'use strict';
+'use strict';
 
 const fs = require('fs');
 
@@ -26,13 +26,10 @@ function readLine() {
 
 // Complete the birthdayCakeCandles function below.
 function birthdayCakeCandles(ar) {
-    var counter=0, max=ar[0];
+    var counter=0;
+    var max= Math.max.apply(null,ar);
     for( var i=0; i<ar.length; i++) {
-        if(ar[i]>max) {
-            max = ar[0];
-            counter = 1;
-        }
-        else if(ar[i]==max) {
+         if(ar[i]==max) {
             counter++;
         }
     }
