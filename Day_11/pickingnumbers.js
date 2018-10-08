@@ -1,4 +1,4 @@
-'use strict';
+'use strict';
 
 const fs = require('fs');
 
@@ -35,15 +35,13 @@ function pickingNumbers(a) {
         arr[a[i]]++;
     }
     
-    var max = 0;
-    var max2 = 0;
-    for(var i=1; i<100; i++) {
-        if(arr[i]>max) {
-            max2 = max;
-            max = i;
-        }   
+    var max=0;
+    for(var i=2; i<100; i++) {
+        if(arr[i]+arr[i-1]>max){
+            max = arr[i]+arr[i-1];
+        }
     }
-    return arr[max]+arr[max2];
+    return max;
 
 
 }
@@ -60,4 +58,4 @@ function main() {
     ws.write(result + "\n");
 
     ws.end();
-}s
+}
