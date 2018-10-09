@@ -26,41 +26,30 @@ function readLine() {
 
 // Complete the climbingLeaderboard function below.
 function climbingLeaderboard(scores, alice) {
-    var rank = 1;
-    var scoresRank = [];
-    scoresRank[0] = 1;
-    var aliceRank = [];
-    var flag = true;
     
-    // set rank for each element in scores into a new scoresRank array
-    for(var i=1; i<scores.length; i++) {
-        if(scores[i]<scores[i-1]){
-            rank++;
-        }
-        scoresRank[i]=rank;
-    }
-    
-    //finding suitable pos for alice's scores
-    for(var j=0; j<alice.length; j++) {
-        flag = true;
-        for(var i=scores.length; i>-1; i--) {
-            if(alice[j]<=scores[i]){
-                if(alice[j]==scores[i]) {
-                    flag = false;
-                    aliceRank[j] = scoresRank[i];
-                    break;
-                }else {
-                    flag = false;
-                    aliceRank[j] = scoresRank[i]+1;
-                    break;
-                }
+        var rank=1;
+        for(var i=alice.length-1,j=0;i>=0;i--){
+
+        for(;j<scores.length;j++){
+
+            if(j!=scores.length-1 && (alice[i]<scores[j]) && (scores[j]!=scores[j+1])){
+                rank++;
             }
+            else if(alice[i]>=scores[j]){
+                 break;
+             }
+            else if(j==scores.length-1 && (alice[i]<scores[j])){
+                  rank++;
+            }
+
         }
-        if(flag==true){
-            aliceRank[j]=1;
-        }
+        alice[i]=rank;
+
+
     }
-    return aliceRank;
+
+        return alice;
+
 
 }
 
