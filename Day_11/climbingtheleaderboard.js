@@ -27,28 +27,31 @@ function readLine() {
 // Complete the climbingLeaderboard function below.
 function climbingLeaderboard(scores, alice) {
     
-        var rank=1;
-        for(var i=alice.length-1,j=0;i>=0;i--){
-
-        for(;j<scores.length;j++){
-
-            if(j!=scores.length-1 && (alice[i]<scores[j]) && (scores[j]!=scores[j+1])){
-                rank++;
-            }
-            else if(alice[i]>=scores[j]){
-                 break;
-             }
-            else if(j==scores.length-1 && (alice[i]<scores[j])){
-                  rank++;
-            }
-
+     var h_rank = 1;
+    for(var i=scores.length-1;i>0;i--){
+        if(scores[i]<scores[i-1]){
+            h_rank++;
         }
-        alice[i]=rank;
-
-
     }
-
-        return alice;
+    h_rank++;
+    var ranks=[];
+    var j = scores.length-1;
+    for(var i=0;i<alice.length;i++){
+        while(alice[i]>=scores[j] ){
+            if(h_rank==1){
+                break;
+            }
+            if(scores[j]==scores[j-1]){
+                j--;
+            }
+            else{
+                j--;
+                h_rank--;
+            }
+        }
+        ranks[i] = h_rank;
+    }
+    return ranks;
 
 
 }
