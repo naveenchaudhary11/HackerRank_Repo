@@ -1,21 +1,17 @@
 'use strict';
 
-const fs = require('fs');
-
 process.stdin.resume();
 process.stdin.setEncoding('utf-8');
 
 let inputString = '';
 let currentLine = 0;
 
-process.stdin.on('data', inputStdin => {
+process.stdin.on('data', function(inputStdin) {
     inputString += inputStdin;
 });
 
-process.stdin.on('end', _ => {
-    inputString = inputString.replace(/\s*$/, '')
-        .split('\n')
-        .map(str => str.replace(/\s*$/, ''));
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
 
     main();
 });
@@ -24,25 +20,43 @@ function readLine() {
     return inputString[currentLine++];
 }
 
-// Complete the countingSort function below.
-function countingSort(arr) {
-
-
-    arr.sort(function(a,b){ return a-b; });
-    return arr;
+function countSort(arr) {
+      
+    let n=arr.length;
+    let ar=new Array(n);
+    for(let j=0;j<n;j++) {
+        ar[j]="";
+    }
+    for(let i = 0; i < n/2; i++){
+        let x = arr[i][0];
+        
+        let s =arr[i][1];
+        
+        ar[x] = ar[x] + "-" + " ";
+        
+    }
     
+    for(let i = n/2; i < n; i++){
+        let x = arr[i][0];
+        let s =arr[i][1];
+        ar[x] = ar[x] + s + " ";
+    }
+    
+    let str="";
+    for(let i = 0; i < n; i++)
+       str=str+ar[i];
+     console.log(str);
+   
+        
 }
-
 function main() {
-    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+    const n = parseInt(readLine().trim(), 10);
 
-    const n = parseInt(readLine(), 10);
+    let arr = Array(n);
 
-    const arr = readLine().split(' ').map(arrTemp => parseInt(arrTemp, 10));
+    for (let i = 0; i < n; i++) {
+        arr[i] = readLine().replace(/\s+$/g, '').split(' ');
+    }
 
-    let result = countingSort(arr);
-
-    ws.write(result.join(" ") + "\n");
-
-    ws.end();
+    countSort(arr);
 }
