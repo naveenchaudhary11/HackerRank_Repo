@@ -1,0 +1,91 @@
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+    public static int[] pows = new int[100001];
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int q = sc.nextInt();
+        String s = sc.next();
+        int[][] dp = new int[n][26];
+        int[] curr = new int[n];
+        curr[0] = s.charAt(0)-'a';
+        dp[0][curr[0]] = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < 26; j++) {
+                dp[i][j] = dp[i-1][j];
+            }
+            curr[i] = s.charAt(i)-'a';
+            dp[i][curr[i]]++;
+        }
+        pows[0] = 1;
+        for (int i = 1; i <= 100000; i++) {
+            pows[i] = (pows[i-1]*2)%1000000007;
+        }
+        for (int z = 0; z < q; z++) {
+            int type = sc.nextInt();
+            if (type == 1) {
+                int u = sc.nextInt();
+                int v = sc.nextInt();
+                int t = sc.nextInt();
+                int[] changes = new int[26];
+                for (int i = u; i <= v; i++) {
+                    changes[curr[i]]--;
+                    curr[i] = ((curr[i])+t)%26;
+                    changes[curr[i]]++;
+                    for (int j = 0; j < 26; j++) {
+                        dp[i][j] += changes[j];
+                    }
+                }
+                for (int i = v+1; i < n; i++) {
+                    for (int j = 0; j < 26; j++) {
+                        dp[i][j] += changes[j];
+                    }
+                }
+            } else if (type == 2) {
+                int[] counts = new int[26];
+                int u = sc.nextInt();
+                int v = sc.nextInt();
+                if (u==0) {
+                    for (int i = 0; i < 26; i++) {
+                        counts[i] = dp[v][i];
+                    }
+                } else {
+                    for (int i = 0; i < 26; i++) {
+                        counts[i] = dp[v][i]-dp[u-1][i];
+                    }
+                }
+                System.out.println((countPalUnused(counts, 0)+1000000006)%1000000007);
+            }
+        }
+
+    }
+
+    public static int countPalUnused(int[] counts, int start) {
+        if (start == 26)
+            return 1;
+        long unusedPossibilities = 1;
+        long usedPossibilities = 0;
+        if (counts[start]>0) {
+            unusedPossibilities = pows[counts[start]-1];
+            usedPossibilities = pows[counts[start]-1];
+        }
+        long countUnused = (countPalUnused(counts, start+1)*unusedPossibilities)%1000000007;
+        long countUsed = (countPalUsed(counts, start+1)*usedPossibilities)%1000000007;
+        return (int)(countUnused+countUsed)%1000000007;
+    }
+
+    public static int countPalUsed(int[] counts, int start) {
+        if (start == 26)
+            return 1;
+        long unusedPossibilities = 1;
+        if (counts[start]>0) {
+            unusedPossibilities = pows[counts[start]-1];
+        }
+        return (int)((countPalUsed(counts, start+1)*unusedPossibilities)%1000000007);
+    }
+}
